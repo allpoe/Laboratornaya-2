@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Laboratory #6</title>
+    <style>
+      body {
+        background-color: #676e5e;
+      }
+      .main {
+        height: 500px;
+        width: 800px;
+        margin: 20%;
+      }
+      #only1 {
+        background-color: #e6c797;
+        border: none;
+        width: 280px;
+        height: 105px;
+        border-radius: 10px;
+        margin-left: 31%;
+        margin-top: 22%;
+        font-size: 300%;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #5a4b2e;
+      }
+      #only1:hover {
+        background-color: #e6c481;
+        color: #3f3d3d;
+      }
+      #inpts {
+        display: none;
+      }
+      #but {
+        display: block;
+      }
+      #sbmt {
+        height: 50px;
+        width: 450px;
+        font-size: 200%;
+        background-color: #e6e7d6;
+        border: none;
+        border-radius: 10px;
+        margin-left: 20%;
+        margin-top: 5%;
+      }
+      .text {
+        background-color: #e6e7d6;
+        width: 550px;
+        height: 25px;
+        margin-left: 15%;
+        margin-top: 2%;
+      }
+      #t1 {
+        margin-left: 15%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <form class="first">
+        <div id="but">
+          <input type="button" id="only1" value="ПОИСК" onclick="strt()" />
+        </div>
+      </form>
+      <div id="inpts">
+        <label><input type="checkbox" id="t1" /> Глобальный поиск </label>
+        <input type="text" class="text" id="t2" placeholder="Называние" />
+        <input type="data" class="text" id="t3" placeholder="Ключевые слова" />
+        <input type="button" id="sbmt" value="Submit" onclick="submtt()" />
+      </div>
+    </div>
+    <script>
+      function strt() {
+        only1.onclick = null;
+        document.getElementById("only1").style.height = "55px";
+        document.getElementById("only1").style.width = "120px";
+        document.getElementById("only1").style.margin = "1%";
+        document.getElementById("only1").style.fontSize = "100%";
+        document.getElementById("inpts").style.display = "grid";
+      }
+      function submtt() {
+        sbmt.onclick = null;
+        alert(
+          document.getElementById("t1").checked +
+            "     " +
+            document.getElementById("t2").value +
+            "     " +
+            document.getElementById("t3").value
+        );
+      }
+    </script>
+  </body>
+</html>
