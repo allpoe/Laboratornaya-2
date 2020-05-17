@@ -1,0 +1,15 @@
+alert( "firstChild: " + document.querySelector("body > div.page-wrapper > div.basePage__inner").firstChild )
+
+alert( "nextSibling: " + document.querySelector("body > div.ivi-footer no-mobile js-footer").nextSibling )
+
+alert( "lastElementChild: " + document.querySelector(".atlwdg-blanket").lastElementChild )
+
+alert( "ElementsWithClassName: " + document.getElementsByClassName("ivi-top js-menu-block") )
+
+alert( "ElementWithId: " + document.getElementById("actions-popup") )
+
+alert( "ElemInElem: " + document.querySelector(" div.page-wrapper > div.basePage__inner"))
+
+alert( "Attribute: " + document.querySelector("[class='nbl-button__primaryText']"))
+
+alert( "Pseudoclass: " + document.querySelector(".page-wrapper :before"))
