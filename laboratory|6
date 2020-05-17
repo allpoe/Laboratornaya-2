@@ -65,7 +65,7 @@
       </form>
       <div id="inpts">
         <label><input type="checkbox" id="t1" /> Глобальный поиск </label>
-        <input type="text" class="text" id="t2" placeholder="Называние" />
+        <input type="text" class="text" id="t2" placeholder="Название" />
         <input type="data" class="text" id="t3" placeholder="Ключевые слова" />
         <input type="button" id="sbmt" value="Submit" onclick="submtt()" />
       </div>
