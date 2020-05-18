@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>lab7</title>
+</head>
+<body>
+    <div>
+        <script>
+        
+        function loaded() {
+            alert("Изображение загружено");
+            }
+            function preloadImage(url)
+{
+            var img=new Image();
+                img.src = url;
+
+                loaded();
+
+                
+            }
+            preloadImage("https://www.google.com/url?sa=i&url=http%3A%2F%2Fmagicspheres.space%2Fpochemu-nekotorye-prognozy-tarologa-ne-sbyvayutsya%2F&psig=AOvVaw1jCFlOeA5fqnnJQ1zfCAPG&ust=1589903422257000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODamvHhvekCFQAAAAAdAAAAABAD");
+    </script>
+    
+    </div>
+</body>
+</html>
