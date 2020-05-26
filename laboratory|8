@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+
+async function start() {
+let link1 = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY');
+let data = await link1.json();
+
+let author = document.createElement("h1");
+author.innerHTML = data.copyright;
+document.body.append(author);
+author.style.padding = "3%";
+author.style.marginLeft = "45%";
+
+
+let image = document.createElement("img");
+image.src = data.url;
+image.width = "600";
+image.height = "400";
+image.style.marginLeft = "30%";
+image.style.padding = "3%";
+document.body.append(image);
+
+let aboutit = document.createElement("h2");
+aboutit.innerHTML = data.explanation;
+document.body.append(aboutit);
+aboutit.style.marginLeft = "20%";
+aboutit.style.marginRight = "10%";
+aboutit.style.padding = "5%";
+aboutit.style.textAlign="justify";
+}
+
+start();
+
+</script>
+
+</html>
