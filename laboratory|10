@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Crossword</title>
+    <style>
+      body {
+        font: 62.5%/1.3em "courier new", monospace;
+        width: 90.3%;
+        margin: 10px auto;
+      }
+
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        max-width: 100%;
+      }
+      table tr {
+        width: 100%;
+      }
+      table td {
+        width: 5em;
+        height: 5em;
+        border: 1px solid #cdcdcd;
+        padding: 0;
+        margin: 0;
+        background-color: #333;
+        position: relative;
+      }
+
+      td input {
+        width: 100%;
+        height: 100%;
+        padding: 0em;
+        border: none;
+        text-align: center;
+        font-size: 3em;
+        color: #666;
+        background-color: #f4f4f4;
+      }
+
+      td input:focus {
+        background-color: #fff;
+      }
+      td input::placeholder {
+        font-size: 15px;
+        padding: 0%;
+        color: peru;
+      }
+
+      td span {
+        color: #444;
+        font-size: 0.8em;
+        position: absolute;
+        top: -1px;
+        left: 1px;
+      }
+
+      input.done {
+        font-weight: bold;
+        color: green;
+      }
+
+      ul {
+        list-style-type: none;
+      }
+
+      .active,
+      .clues-active {
+        background-color: #fceda5;
+      }
+      .clue-done {
+        color: #999;
+        text-decoration: line-through;
+      }
+
+      #puzzle-wrapper {
+        float: left;
+        width: 54%;
+        margin-right: 3%;
+      }
+      #puzzle-clues {
+        float: left;
+        width: 40%;
+      }
+
+      #puzzle-clues li {
+        font-size: 1.4em;
+        margin: 0.3em;
+        line-height: 1.6em;
+      }
+
+      #footer {
+        position: fixed;
+        bottom: 50px;
+        left: 30px;
+        font-size: 1.4em;
+      }
+      .clear {
+        clear: both;
+      }
+      .answ {
+        position: absolute;
+        margin-top: 40%;
+        list-style: square;
+      }
+      .answer {
+        border: none;
+        font-size: 15px;
+        color: ivory;
+        padding-top: 2px;
+      }
+      #lstyl {
+        list-style: decimal;
+        font-size: 16px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Кроссворд</h1>
+      <h2>правила кроссворда бла бла бла...</h2>
+    </div>
+    <div id="puzzle-wrapper">
+      <table id="puzzle">
+        <tbody>
+          <tr>
+            <td >
+              <input
+                class="box1"
+               onkeyup="CkAns(1)"
+                onfocus="redir(1)"
+                onblur="tback(1)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="1"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box2 box3"
+              onkeyup="CkAns(2),CkAns(3)"
+                onfocus="redir(2, 22)"
+                onblur="tback(2, 22)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="2"
+              />
+            </td>
+            <td>
+              <input
+              class="box2"
+              onkeyup="CkAns(2)"
+                onfocus="redir(2)"
+                onblur="tback(2)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input class="box2 box4"
+              onkeyup="CkAns(2),CkAns(4)"
+                onfocus="redir(2,3)"
+                onblur="tback(2,3)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="3"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input class="box5 box6"
+              onkeyup="CkAns(5),CkAns(6)"
+                onfocus="redir(4,44)"
+                onblur="tback(4,44)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="4"
+              />
+            </td>
+            <td>
+              <input class="box5 box7"
+              onkeyup="CkAns(5),CkAns(7)"
+              
+                onfocus="redir(4,5)"
+                onblur="tback(4,5)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="5"
+              />
+            </td>
+            <td>
+              <input  class="box5"
+              onkeyup="CkAns(5)"
+                onfocus="redir(4)"
+                onblur="tback(4)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+              class="box1 box8"
+              onkeyup="CkAns(1), CkAns(8)"
+                onfocus="redir(1,6)"
+                onblur="tback(1,6)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="6"
+              />
+            </td>
+            <td>
+              <input
+              class = "box8 box9"
+              onkeyup="CkAns(8), CkAns(9)"
+                onfocus="redir(6,7)"
+                onblur="tback(6,7)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="7"
+              />
+            </td>
+            <td>
+              <input
+              class="box3 box8"
+              onkeyup="CkAns(3), CkAns(8)"
+                onfocus="redir(6,22)"
+                onblur="tback(6,22)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box4 box10"
+              onkeyup="CkAns(4),CkAns(10)"
+                onfocus="redir(3,8)"
+                onblur="tback(3,8)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="8"
+              />
+            </td>
+            <td>
+              <input
+              class="box10 box11"
+              onkeyup="CkAns(10),CkAns(11)"
+                onfocus="redir(8,9)"
+                onblur="tback(8,9)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="9"
+              />
+            </td>
+            <td>
+              <input
+              class="box6 box10"
+              onkeyup="CkAns(6),CkAns(10)"
+                onfocus="redir(44,8)"
+                onblur="tback(44,8)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box7 box10"
+              onkeyup="CkAns(7),CkAns(10)"
+                onfocus="redir(5,8)"
+                onblur="tback(5,8)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <input
+              class="box1 box12"
+              onkeyup="CkAns(1), CkAns(12)"
+                onfocus="redir(1,10)"
+                onblur="tback(1,10)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="10"
+              />
+            </td>
+            <td>
+              <input
+              class="box9 box12"
+              onkeyup="CkAns(9),CkAns(12)"
+                onfocus="redir(7,10)"
+                onblur="tback(7,10)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+
+              class="box3 box12"
+              onkeyup="CkAns(3),CkAns(12)"
+                onfocus="redir(22,10)"
+                onblur="tback(22,10)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td >
+              <input
+              class="box12 box13"
+              onkeyup="CkAns(12),CkAns(13)"
+                onfocus="redir(10,11)"
+                onblur="tback(10,11)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="11"
+              />
+            </td>
+            <td></td>
+            <td >
+              <input
+              class="box11 box14"
+              onkeyup="CkAns(11),CkAns(14)"
+                onfocus="redir(12,9)"
+                onblur="tback(12,9)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="12"
+              />
+            </td>
+            <td >
+              <input 
+              class="box6 box14"
+              onkeyup="CkAns(6),CkAns(14)"
+                onfocus="redir(44,12)"
+                onblur="tback(44,12)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box14 box7"
+              onkeyup="CkAns(14),CkAns(7)"
+                onfocus="redir(12,5)"
+                onblur="tback(12,5)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td >
+              <input
+              class="box14 box15"
+              onkeyup="CkAns(14),CkAns(15)"
+                onfocus="redir(12,13)"
+                onblur="tback(12,13)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="13"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td >
+              <input
+              class="box9 box16"
+              onkeyup="CkAns(9),CkAns(16)"
+                onfocus="redir(7,14)"
+                onblur="tback(7,14)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="14"
+              />
+            </td>
+            <td>
+              <input
+              class="box3 box16"
+              onkeyup="CkAns(3),CkAns(16)"
+                onfocus="redir(22,14)"
+                onblur="tback(22,14)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box13 box16"
+              onkeyup="CkAns(13),CkAns(16)"
+                onfocus="redir(11,14)"
+                onblur="tback(11,14)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input 
+              class="box16"
+              onkeyup="CkAns(16)"
+                onfocus="redir(14)"
+                onblur="tback(14)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box11 box16"
+              onkeyup="CkAns(11),CkAns(16)"
+                onfocus="redir(9,14)"
+                onblur="tback(9,14)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box6 box16"
+              onkeyup="CkAns(6),CkAns(16)"
+                onfocus="redir(44,14)"
+                onblur="tback(44,14)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input 
+              class="box15"
+              onkeyup="CkAns(15)"
+                onfocus="redir(13)"
+                onblur="tback(13)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+              class="box17 box18"
+              onkeyup="CkAns(17),CkAns(18)"
+                onfocus="redir(15,155)"
+                onblur="tback(15,155)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="15"
+              />
+            </td>
+            <td>
+              <input
+              class="box9 box17"
+              onkeyup=" CkAns(9), CkAns(17)"
+                onfocus="redir(15,7)"
+                onblur="tback(15,7)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box13"
+              onkeyup="CkAns(13)"
+                onfocus="redir(11)"
+                onblur="tback(11)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box11"
+              onkeyup="CkAns(11)"
+                onfocus="redir(9)"
+                onblur="tback(9)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box19 box20"
+              onkeyup="CkAns(19),CkAns(20)"
+                onfocus="redir(16,166)"
+                onblur="tback(16,166)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="16"
+              />
+            </td>
+            <td>
+              <input
+              class="box15 box19"
+              onkeyup="CkAns(15),CkAns(19)"
+                onfocus="redir(16,13)"
+                onblur="tback(16,13)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+              class="box18"
+              onkeyup="CkAns(18)"
+                onfocus="redir(155)"
+                onblur="tback(155)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box21 box22"
+              onkeyup="CkAns(21),CkAns(22)"
+                onfocus="redir(17,177)"
+                onblur="tback(17,177)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="17"
+              />
+            </td>
+            <td>
+              <input
+              class="box13 box21"
+              onkeyup="CkAns(13),CkAns(21)"
+                onfocus="redir(11,17)"
+                onblur="tback(11,17)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box21"
+              onkeyup="CkAns(21)"
+                onfocus="redir(17)"
+                onblur="tback(17)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box11 box21"
+              onkeyup="CkAns(11),CkAns(21)"
+                onfocus="redir(9,17)"
+                onblur="tback(9,17)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td >
+              <input
+              class="box21 box23"
+              onkeyup="CkAns(21),CkAns(23)"
+                onfocus="redir(17,18)"
+                onblur="tback(17,18)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="18"
+              />
+            </td>
+            <td>
+              <input
+              class="box20 box21"
+              onkeyup="CkAns(20),CkAns(21)"
+                onfocus="redir(17,166)"
+                onblur="tback(17,166)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td >
+              <input 
+              class="box18 box24"
+              onkeyup="CkAns(18),CkAns(24)"
+                onfocus="redir(155,19)"
+                onblur="tback(155,19)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="19"
+              />
+            </td>
+            <td>
+              <input
+              class="box24 box25"
+              onkeyup="CkAns(24),CkAns(25)"
+                onfocus="redir(19,20)"
+                onblur="tback(19,20)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="20"
+              />
+            </td>
+            <td>
+              <input
+              class="box22 box24"
+              onkeyup="CkAns(22),CkAns(24)"
+                onfocus="redir(19,177)"
+                onblur="tback(19,177)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box13 box24"
+              onkeyup="CkAns(13),CkAns(24)"
+                onfocus="redir(11,19)"
+                onblur="tback(11,19)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box11 box26"
+              onkeyup="CkAns(11),CkAns(26)"
+                onfocus="redir(21,9)"
+                onblur="tback(21,9)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="21"
+              />
+            </td>
+            <td>
+              <input
+              class="box23 box26"
+              onkeyup="CkAns(23),CkAns(26)"
+                onfocus="redir(21,18)"
+                onblur="tback(21,18)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box20 box26"
+              onkeyup="CkAns(20),CkAns(26)"
+                onfocus="redir(21,166)"
+                onblur="tback(21,166)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box26 box27"
+              onkeyup="CkAns(26),CkAns(27)"
+                onfocus="redir(222,21)"
+                onblur="tback(222,21)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="22"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <input
+              class="box25 box28"
+              onkeyup="CkAns(25),CkAns(28)"
+                onfocus="redir(20,23)"
+                onblur="tback(20,23)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="23"
+              />
+            </td>
+            <td>
+              <input
+              class="box22 box28"
+              onkeyup="CkAns(22),CkAns(28)"
+                onfocus="redir(23,177)"
+                onblur="tback(23,177)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box13 box28"
+              onkeyup="CkAns(13),CkAns(28)"
+                onfocus="redir(23,11)"
+                onblur="tback(23,11)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box28 box29"
+              onkeyup="CkAns(28),CkAns(29)"
+                onfocus="redir(23,24)"
+                onblur="tback(23,24)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="24"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box23 box30"
+              onkeyup="CkAns(23),CkAns(30)"
+                onfocus="redir(25,18)"
+                onblur="tback(25,18)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="25"
+              />
+            </td>
+            <td>
+              <input
+              class="box20 box30"
+              onkeyup="CkAns(20),CkAns(30)"
+                onfocus="redir(25,166)"
+                onblur="tback(25,166)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box27 box30"
+              onkeyup="CkAns(27),CkAns(30)"
+                onfocus="redir(25,222)"
+                onblur="tback(25,222)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+              class="box31"
+              onkeyup="CkAns(31)"
+                onfocus="redir(26)"
+                onblur="tback(26)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="26"
+              />
+            </td>
+            <td>
+              <input
+              class="box25 box31"
+              onkeyup="CkAns(25),CkAns(31)"
+                onfocus="redir(20,26)"
+                onblur="tback(20,26)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box22 box31"
+              onkeyup="CkAns(22),CkAns(31)"
+                onfocus="redir(26,177)"
+                onblur="tback(26,177)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box29 box32"
+              onkeyup="CkAns(29),CkAns(32)"
+                onfocus="redir(24,27)"
+                onblur="tback(24,27)"
+                maxlength="1"
+                value=""
+                type="text"
+                placeholder="27"
+              />
+            </td>
+            <td>
+              <input
+              class="box32"
+              onkeyup="CkAns(32)"
+                onfocus="redir(27)"
+                onblur="tback(27)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td>
+              <input
+              class="box23 box32"
+              onkeyup="CkAns(23),CkAns(32)"
+                onfocus="redir(27,18)"
+                onblur="tback(27,18)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+            <td></td>
+            <td>
+              <input
+              class="box27"
+              onkeyup="CkAns(27)"
+                onfocus="redir(222)"
+                onblur="tback(222)"
+                maxlength="1"
+                value=""
+                type="text"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="answ">
+      <strong style="font-size: 25px;">Ответы</strong>
+      <ul id="lstyl">
+        <li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="воз"
+          />
+        </li>
+        <li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans2"
+            value="лис, лавр"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans3"
+            value="си"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="усы, урал"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="сад"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="ода"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="дети"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="икра"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="кризис"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="зевс"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="собака"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="рада"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="али"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="тротил"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="щи, щит"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="ги, гана"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="сатира, сага"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="рама"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="трак"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="рак"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="сани"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="ион"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="агат"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="ту"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="мао"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="ока"
+          />
+        </li><li>
+          <input
+            class="answer"
+            type="text"
+            onmouseover="this.style.color='black'"
+            onmouseout="this.style.color='white'"
+            readonly
+            id="ans1"
+            value="ура"
+          />
+        </li>
+        
+    </div>
+    <div id="puzzle-clues">
+      <h2>По горизонтали:</h2>
+      <ul id="across">
+        <li id="q2"><strong>2)</strong> Хитрый зверь</li>
+        <li id="q4"><strong>4)</strong> Поросль на лице</li>
+        <li id="q6"><strong>6)</strong> Торжественное стихотворение</li>
+        <li id="q8"><strong>8)</strong> И рыбья, и овощная</li>
+        <li id="q10"><strong>10)</strong> Верховный бог у древних греков</li>
+        <li id="q12"><strong>12)</strong> Парламент Украины</li>
+        <li id="q14"><strong>14)</strong> Взрывчатка</li>
+        <li id="q15"><strong>15)</strong> Суп с капустой</li>
+        <li id="q16"><strong>16)</strong> Имя Мопассана</li>
+        <li id="q17"><strong>17)</strong> Вид художственной литературы</li>
+        <li id="q19"><strong>19)</strong> Звено гусеницы</li>
+        <li id="q21">
+          <strong>21)</strong> Летняя забота владельца гужевого транспорта
+          (фолк.)
+        </li>
+        <li id="q23"><strong>23)</strong> Минерал, разновидность кварца</li>
+        <li id="q25"><strong>25)</strong> Великий вожд китайского народа</li>
+        <li id="q26"><strong>26)</strong> Крупнейший приток Волги</li>
+        <li id="q27"><strong>27)</strong> "Банзай" по-русски</li>
+      </ul>
+      <h2>По вертикали:</h2>
+      <ul id="down">
+        <li id="q1"><strong>1)</strong> Колесная повозка или сани с кладью</li>
+        <li id="q22">
+          <strong>2)</strong> Дерево с листьями и для венка, и для борща
+        </li>
+        <li id="q3"><strong>3)</strong> Нота</li>
+        <li id="q44"><strong>4)</strong> Горный массив России</li>
+        <li id="q5">
+          <strong>5)</strong> Участок земли, засаженный деревьями, кустами,
+          цветами
+        </li>
+        <li id="q7"><strong>7)</strong> Цветы жизни</li>
+        <li id="q9"><strong>9)</strong> Переломный момент в болезни</li>
+        <li id="q11"><strong>11)</strong> Домашнее животное</li>
+        <li id="q13"><strong>13)</strong> Мусульманское имя Кассиуса Клея</li>
+        <li id="q155">
+          <strong>15)</strong> Средство обороны от холодного оружия
+        </li>
+        <li id="q166"><strong>16)</strong> Государство в Западной Африке</li>
+        <li id="q177">
+          <strong>17)</strong> Древнескандинавское народное сказание
+        </li>
+        <li id="q18"><strong>18)</strong> Она укрошает картину</li>
+        <li id="q20"><strong>20)</strong> Зодиакальное созвездие</li>
+        <li id="q222"><strong>22)</strong> Электрически заряженная частица</li>
+        <li id="q24"><strong>24)</strong> Марка, тип российских самолетов</li>
+      </ul>
+    </div>
+
+    <script>
+    
+      function redir(elid, nelid) {
+        let elq = document.getElementById("q" + elid);
+        elq.style = "background-color: khaki;";
+        let nelq = document.getElementById("q" + nelid);
+        nelq.style = "background-color: khaki;";
+      }
+      function tback(elid, nelid) {
+        let elq = document.getElementById("q" + elid);
+        elq.style = "background-color: white;";
+        let nelq = document.getElementById("q" + nelid);
+        nelq.style = "background-color: white;";
+      }
+      let RegExp=[
+        /emptpstn/i,
+        /[а-г]оз/gi,
+        /л.*с/i,
+        /л(а|кур)вр/i,
+        /.(и|ты){1}/i,
+        /у.*[ъ-ь]/i,
+        /.(ра|вар)л/i,
+        /с(ад|рай)/i,
+        /.*(нет|да){1}/i,
+        /..[ит]/i,
+        /^(ик)(мон|ра)/i,
+        /\S[имрзс]/i,
+        /.е(вс){1}/i,
+        /с([оиеуа]).[ак]./i,
+        /^(р)([да])./i,
+        /а(л)?и/i,
+        /([рот]){3}.([ил])?/i,
+        /[тищй3]{2}/i,
+        /([притщ]{3})|(морж){2}/i,
+        /ги/i,
+        /[наг]{4}/i,
+        /са\D[ира]{3}/i,
+        /([гас]{4})|(альтрон)/i,
+        /^([мар]{4})/i,
+        /.р[а-к]/i,
+        /\b([мкар]{3})\b/i,
+        /са(ни|тир)/i,
+        /ио\D/i,
+        /[гта]{4}/i,
+        /^[ту]+/i,
+        /\bмао\b/i,
+        /\Sка/i,
+        /у[а-ё]\D/i
+        
+        
+      ]
+      
+
+      function CkAns(QNum){
+		let Answer="";
+		let Questions = document.getElementsByClassName("box"+[QNum]);
+    	for (i=0; i<Questions.length; i++) {
+    	    Answer += Questions[i].value;
+      }
+		if (Answer.length == Questions.length){
+			if(RegExp[QNum].test(Answer)){
+				for (i=0; i<Questions.length; i++) {
+    		    	Questions[i].style.backgroundColor='lightgreen';
+				}
+    		} else {
+				for (i=0; i<Questions.length; i++) {
+    		    	Questions[i].style.backgroundColor = '#ffc0c0' ;
+				}
+			}
+		
+    }
+	}
+  
+    </script>
+  </body>
+</html>
